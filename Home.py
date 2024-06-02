@@ -25,6 +25,9 @@ with st.sidebar:
             return splits
 
         def generate_unique_filename(directory, original_filename):
+            if not os.path.exists(directory):
+                os.mkdir(directory)
+                
             base_name, file_extension = os.path.splitext(original_filename)
             unique_id = uuid.uuid4()
             unique_filename = f"{base_name}_{unique_id}{file_extension}"
