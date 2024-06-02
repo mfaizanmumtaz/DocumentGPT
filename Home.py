@@ -8,6 +8,11 @@ import os,uuid
 st.set_page_config(page_title="DocumentGPT", page_icon=":💬:", layout="wide")
 st.header("DocumentGPT 💬")
 
+os.environ['LANGCHAIN_TRACING_V2'] = 'true'
+os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
+os.environ['LANGCHAIN_API_KEY'] = "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"
+os.environ["LANGCHAIN_PROJECT"] = "RAG"
+
 with st.sidebar:
 
     uploaded_files = st.file_uploader("Upload your file", type=['pdf','txt'], accept_multiple_files=True)
@@ -27,7 +32,7 @@ with st.sidebar:
         def generate_unique_filename(directory, original_filename):
             if not os.path.exists(directory):
                 os.mkdir(directory)
-                
+
             base_name, file_extension = os.path.splitext(original_filename)
             unique_id = uuid.uuid4()
             unique_filename = f"{base_name}_{unique_id}{file_extension}"
