@@ -71,12 +71,6 @@ def _format_chat_history(chat_history: List[Tuple[str, str]]) -> List:
     #     buffer.append(AIMessage(content=ai))
     return chat_history
 
-# User input
-class ChatHistory(BaseModel):
-    chat_history: List[Tuple[str, str]] = Field(..., extra={"widget": {"type": "chat"}})
-    question: str
-
-
 _search_query = RunnableBranch(
     # If input includes chat_history, we condense it with the follow-up question
     (
@@ -99,7 +93,7 @@ _inputs = RunnableParallel(
         "chat_history": lambda x: _format_chat_history(x["chat_history"]),
         "context": _search_query | retriever | _combine_documents,
     }
-).with_types(input_type=ChatHistory)
+)
 
 chain = _inputs | ANSWER_PROMPT | ChatGoogleGenerativeAI(model="gemini-1.5-flash",google_api_key=os.getenv("google_api_key")) | StrOutputParser()
 chain.invoke({'question':"hi","chat_history":[]})
