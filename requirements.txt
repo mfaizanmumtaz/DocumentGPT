@@ -13,3 +13,4 @@ pydantic_core==2.18.3
 PyPDF2==3.0.1
 qdrant-client==1.9.1
 streamlit==1.35.0
+pypdf
