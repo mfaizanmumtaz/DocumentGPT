@@ -4,22 +4,17 @@ import streamlit as st
 from langchain.prompts import (
     ChatPromptTemplate,
     HumanMessagePromptTemplate,
-    MessagesPlaceholder,
-    SystemMessagePromptTemplate,
-)
+    MessagesPlaceholder,)
 from langchain.schema.messages import HumanMessage,AIMessage
 
 def main():
     prompt = ChatPromptTemplate(
         messages=[
-SystemMessagePromptTemplate.from_template(
-"""You are a helpful assistant.
-
-> ``````"""),
     MessagesPlaceholder(variable_name="chat_history"),
     HumanMessagePromptTemplate.from_template("{question}")])
 
     msgs = StreamlitChatMessageHistory(key="langchain_messages")
+
     if len(msgs.messages) == 0:
         msgs.add_ai_message("Hello! How can I assist you today?")
 

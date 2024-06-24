@@ -1,5 +1,7 @@
 from operator import itemgetter
 from typing import List, Tuple
+# from dotenv import load_dotenv
+# load_dotenv()
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 # from langchain_core.messages import AIMessage, HumanMessage
@@ -9,7 +11,6 @@ from langchain_core.prompts import (
     MessagesPlaceholder,
     format_document,)
 from langchain_core.prompts.prompt import PromptTemplate
-from langchain_core.pydantic_v1 import BaseModel, Field
 from langchain_core.runnables import (
     RunnableBranch,
     RunnableLambda,
@@ -56,13 +57,10 @@ ANSWER_PROMPT = ChatPromptTemplate.from_messages(
 # Conversational Retrieval Chain
 DEFAULT_DOCUMENT_PROMPT = PromptTemplate.from_template(template="{page_content}")
 
+def _combine_documents(docs, document_prompt=DEFAULT_DOCUMENT_PROMPT,       document_separator="\n\n"):
 
-def _combine_documents(
-    docs, document_prompt=DEFAULT_DOCUMENT_PROMPT, document_separator="\n\n"
-):
     doc_strings = [format_document(doc, document_prompt) for doc in docs]
     return document_separator.join(doc_strings)
-
 
 def _format_chat_history(chat_history: List[Tuple[str, str]]) -> List:
     # buffer = []

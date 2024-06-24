@@ -2,21 +2,23 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.document_loaders import TextLoader
 from langchain_community.vectorstores import Qdrant
 from langchain_cohere import CohereEmbeddings
+from langchain.load import dumps
 import streamlit as st 
 import os,uuid
+# from dotenv import load_dotenv
+# load_dotenv()
 
 st.set_page_config(page_title="DocumentGPT", page_icon=":💬:", layout="wide")
 st.header("DocumentGPT 💬")
 
 os.environ['LANGCHAIN_TRACING_V2'] = 'true'
 os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
-os.environ['LANGCHAIN_API_KEY'] = "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"
+os.environ['LANGCHAIN_API_KEY'] = os.getenv("langchain")
 os.environ["LANGCHAIN_PROJECT"] = "RAG"
 
 with st.sidebar:
 
     uploaded_files = st.file_uploader("Upload your file", type=['pdf','txt'], accept_multiple_files=True)
-
     if st.button("Process"):
 
         def get_pdf_text(file_path):
@@ -59,15 +61,19 @@ with st.sidebar:
                     st.error(f"Error processing file: {e}")
                 finally:
                     os.remove(file_path)
+
+            # dumping document to str to avoid from surrogate errors.
             
+            _Documents = [dumps(doc) for doc in Documents]
+               
             # Indexing part Goes Here
             st.write("Indexing Please Wait...")
             try:
                 url = os.getenv("cluster_url")
                 api_key = os.getenv("gd_api_key")
                 embeddings = CohereEmbeddings(model="embed-english-light-v3.0",cohere_api_key=os.getenv("cohere_api_key"))
-                qdrant = Qdrant.from_documents(
-                    Documents,
+                qdrant = Qdrant.from_texts(
+                    _Documents,
                     embeddings,
                     url=url,
                     prefer_grpc=True,
@@ -81,7 +87,7 @@ with st.sidebar:
                     st.session_state["langchain_messages"] = []
 
             except Exception as e:
-                st.error(f"Error indexing documents reload the page and try again: {e}")
+                st.error(f"Error indexing: {e}")
         else:
             st.error("No file uploaded.")
 
