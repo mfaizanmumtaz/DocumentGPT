@@ -7,7 +7,7 @@ langchain-google-genai==1.0.5
 langchain-qdrant==0.1.0
 langchain-text-splitters==0.2.0
 langsmith==0.1.67
-protobuf==5.27.0
+protobuf
 pydantic==2.7.2
 pydantic_core==2.18.3
 PyPDF2==3.0.1
