@@ -18,9 +18,9 @@ os.environ['LANGCHAIN_API_KEY'] = os.getenv("LANGCHAIN_API_KEY")
 os.environ["LANGCHAIN_PROJECT"] = "RAG"
 
 def get_pdf_text(file_path):
-    # loader = UnstructuredFileLoader(
-        # file_path=file_path)
-    loader = PyPDFLoader(file_path)
+    loader = UnstructuredFileLoader(
+        file_path=file_path)
+    # loader = PyPDFLoader(file_path)
     pages = loader.load_and_split()
     return pages
 
@@ -41,7 +41,7 @@ with st.sidebar:
                 try:
                     os.makedirs('data', exist_ok=True)
                     file_path = f"data/{uploaded_file.name}"
-                    with open(uploaded_file.name,'wb') as fp:
+                    with open(file_path,'wb') as fp:
                         fp.write(uploaded_file.read())
 
                     split_tup = os.path.splitext(uploaded_file.name)
