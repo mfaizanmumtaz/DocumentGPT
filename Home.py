@@ -41,7 +41,7 @@ with st.sidebar:
                 try:
                     os.makedirs('data', exist_ok=True)
                     file_path = f"data/{uploaded_file.name}"
-                    with open(uploaded_file.name,'w') as fp:
+                    with open(uploaded_file.name,'wb') as fp:
                         fp.write(uploaded_file.read())
 
                     split_tup = os.path.splitext(uploaded_file.name)
