@@ -18,9 +18,9 @@ os.environ['LANGCHAIN_API_KEY'] = os.getenv("LANGCHAIN_API_KEY")
 os.environ["LANGCHAIN_PROJECT"] = "RAG"
 
 def get_pdf_text(file_path):
-    # loader = UnstructuredFileLoader(
-        # file_path=file_path)
-    loader = PyPDFLoader(file_path)
+    loader = UnstructuredFileLoader(
+        file_path=file_path)
+    # loader = PyPDFLoader(file_path)
     pages = loader.load_and_split()
     return pages
 
@@ -39,23 +39,24 @@ with st.sidebar:
             st.write("Files Loaded Splitting...")
             for uploaded_file in uploaded_files:
                 try:
-                    with tempfile.NamedTemporaryFile(delete=False) as fp:
+                    os.makedirs('data', exist_ok=True)
+                    file_path = f"data/{uploaded_file.name}"
+                    with open(uploaded_file.name,'w') as fp:
                         fp.write(uploaded_file.read())
-                        temp_file_path = fp.name
 
                     split_tup = os.path.splitext(uploaded_file.name)
                     file_extension = split_tup[1]
 
                     if file_extension == ".pdf":
-                        Documents.extend(get_pdf_text(temp_file_path))
+                        Documents.extend(get_pdf_text(file_path))
 
                     elif file_extension == ".txt":
-                        Documents.extend(get_txt_text(temp_file_path))
+                        Documents.extend(get_txt_text(file_path))
 
                 except Exception as e:
                     st.error(f"Error processing this file: {uploaded_file.name} {e}")
                 finally:
-                    os.remove(temp_file_path)
+                    os.remove(file_path)
         else:
             st.error("No file uploaded.")
 
