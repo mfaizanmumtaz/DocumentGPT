@@ -6,8 +6,8 @@ from langchain_cohere import CohereEmbeddings
 from langchain_huggingface import HuggingFaceEmbeddings
 import streamlit as st 
 import os,io,tempfile
-from dotenv import load_dotenv
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
 st.set_page_config(page_title="DocumentGPT", page_icon=":💬:", layout="wide")
 st.header("DocumentGPT 💬")
