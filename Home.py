@@ -1,7 +1,9 @@
+from langchain_community.document_loaders import UnstructuredFileLoader
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.document_loaders import TextLoader
 from langchain_community.vectorstores import Qdrant
 from langchain_cohere import CohereEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.load import dumps
 import streamlit as st 
 import os,uuid
@@ -18,11 +20,13 @@ os.environ["LANGCHAIN_PROJECT"] = "RAG"
 
 with st.sidebar:
 
-    uploaded_files = st.file_uploader("Upload your file", type=['pdf','txt'], accept_multiple_files=True)
+    uploaded_files = st.file_uploader("Upload your file", type=['pdf'], accept_multiple_files=True)
     if st.button("Process"):
-
+        
         def get_pdf_text(file_path):
-            loader = PyPDFLoader(file_path)
+            loader = UnstructuredFileLoader(
+                file_path=file_path,strategy="fast")
+            # loader = PyPDFLoader(file_path)
             pages = loader.load_and_split()
             return pages
 
@@ -43,7 +47,7 @@ with st.sidebar:
         Documents = []
         
         if uploaded_files:
-            st.write("Files Loaded Splitting And Chunking...")
+            st.write("Files Loaded Splitting...")
             for uploaded_file in uploaded_files:
                 split_tup = os.path.splitext(uploaded_file.name)
                 file_path = generate_unique_filename("data",uploaded_file.name)
@@ -65,13 +69,14 @@ with st.sidebar:
             # dumping document to str to avoid from surrogate errors.
             
             _Documents = [dumps(doc) for doc in Documents]
-               
+            
             # Indexing part Goes Here
             st.write("Indexing Please Wait...")
             try:
                 url = os.getenv("cluster_url")
                 api_key = os.getenv("gd_api_key")
-                embeddings = CohereEmbeddings(model="embed-english-light-v3.0",cohere_api_key=os.getenv("cohere_api_key"))
+                embeddings = HuggingFaceEmbeddings()
+                # embeddings = CohereEmbeddings(model="embed-english-light-v3.0",cohere_api_key=os.getenv("cohere_api_key"))
                 qdrant = Qdrant.from_texts(
                     _Documents,
                     embeddings,
