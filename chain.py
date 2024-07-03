@@ -19,7 +19,7 @@ from langchain_core.runnables import (
     RunnableParallel,
     RunnablePassthrough,)
 from langchain_community.vectorstores import Qdrant
-from langchain_cohere import CohereEmbeddings
+# from langchain_cohere import CohereEmbeddings
 
 import qdrant_client,os
 from langchain_qdrant import Qdrant
