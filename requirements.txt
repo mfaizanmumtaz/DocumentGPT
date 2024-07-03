@@ -15,3 +15,4 @@ qdrant-client==1.9.1
 streamlit==1.35.0
 pypdf
 sentence_transformers
+langchain_huggingface
