@@ -58,7 +58,7 @@ ANSWER_PROMPT = ChatPromptTemplate.from_messages(
         ("user", "{question}")])
 
 def _combine_documents(docs):
-    return '\n\n'.join(set(doc.page_content for doc in docs))
+    return '\n\n'.join(set(dumps(doc) for doc in docs))
 
 def _format_chat_history(chat_history: List[Tuple[str, str]]) -> List:
     # buffer = []

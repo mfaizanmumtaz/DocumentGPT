@@ -1,11 +1,10 @@
-from langchain_community.document_loaders import UnstructuredFileLoader
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.document_loaders import TextLoader
 from langchain_community.vectorstores import Qdrant
 # from langchain_cohere import CohereEmbeddings
 from langchain_huggingface import HuggingFaceEmbeddings
 import streamlit as st 
-import os,io,tempfile
+import os,uuid
 # from dotenv import load_dotenv
 # load_dotenv()
 
@@ -40,7 +39,7 @@ with st.sidebar:
             for uploaded_file in uploaded_files:
                 try:
                     os.makedirs('data', exist_ok=True)
-                    file_path = f"data/{uploaded_file.name}"
+                    file_path = f"data/{uploaded_file.name}{uuid.uuid1()}"
                     with open(file_path,'wb') as fp:
                         fp.write(uploaded_file.read())
 
