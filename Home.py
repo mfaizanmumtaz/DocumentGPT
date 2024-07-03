@@ -18,9 +18,9 @@ os.environ['LANGCHAIN_API_KEY'] = os.getenv("LANGCHAIN_API_KEY")
 os.environ["LANGCHAIN_PROJECT"] = "RAG"
 
 def get_pdf_text(file_path):
-    loader = UnstructuredFileLoader(
-        file_path=file_path)
-    # loader = PyPDFLoader(file_path)
+    # loader = UnstructuredFileLoader(
+        # file_path=file_path)
+    loader = PyPDFLoader(file_path)
     pages = loader.load_and_split()
     return pages
 
