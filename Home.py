@@ -1,4 +1,4 @@
-from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_community.document_loaders import TextLoader
 from langchain_community.vectorstores import Qdrant
 # from langchain_cohere import CohereEmbeddings
@@ -17,7 +17,7 @@ os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_API_KEY")
 
 
 def get_pdf_text(file_path):
-    loader = PyPDFLoader(file_path)
+    loader = PyMuPDFLoader(file_path=file_path)
     pages = loader.load_and_split()
     return pages
 

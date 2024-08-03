@@ -1,4 +1,3 @@
-# cohere==5.5.4
 langchain==0.2.1
 langchain-cohere==0.1.5
 langchain-community==0.2.1
@@ -10,11 +9,11 @@ langsmith==0.1.67
 protobuf
 pydantic==2.7.2
 pydantic_core==2.18.3
-PyPDF2==3.0.1
+# PyPDF2==3.0.1
 qdrant-client==1.9.1
 streamlit==1.35.0
-pypdf
-sentence_transformers
-langchain-huggingface
-unstructured[pdf]
+# sentence_transformers
+# langchain-huggingface
+# unstructured[pdf]
 psutil
+pymupdf

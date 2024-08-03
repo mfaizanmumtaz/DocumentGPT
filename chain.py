@@ -9,8 +9,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import (
     ChatPromptTemplate,
-    MessagesPlaceholder,
-    format_document,)
+    MessagesPlaceholder,)
 from langchain_core.prompts.prompt import PromptTemplate
 from langchain_core.load import dumps,loads
 from langchain_core.runnables import (
