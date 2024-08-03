@@ -11,14 +11,12 @@ import os,uuid
 st.set_page_config(page_title="DocumentGPT", page_icon=":💬:", layout="wide")
 st.header("DocumentGPT 💬")
 
-os.environ['LANGCHAIN_TRACING_V2'] = 'true'
-os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
-os.environ['LANGCHAIN_API_KEY'] = os.getenv("LANGCHAIN_API_KEY")
-os.environ["LANGCHAIN_PROJECT"] = "RAG"
+os.environ["LANGCHAIN_TRACING_V2"] = "true"
+os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
+os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_API_KEY")
+
 
 def get_pdf_text(file_path):
-    # loader = UnstructuredFileLoader(
-        # file_path=file_path)
     loader = PyPDFLoader(file_path)
     pages = loader.load_and_split()
     return pages

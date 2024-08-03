@@ -36,7 +36,7 @@ vectorstore = Qdrant(
     client=client, collection_name="my_documents", 
     embeddings=embeddings,)
 
-retriever = vectorstore.as_retriever(search_kwargs={'k': 10})
+retriever = vectorstore.as_retriever(search_kwargs={'k': 15})
 
 # Condense a chat history and follow-up question into a standalone question
 _template = """Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question, in its original language.
