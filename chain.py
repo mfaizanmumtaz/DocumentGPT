@@ -4,7 +4,7 @@ from typing import List, Tuple
 # load_dotenv()
 
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_huggingface import HuggingFaceEmbeddings
+# from langchain_huggingface import HuggingFaceEmbeddings
 # from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import (
@@ -18,7 +18,7 @@ from langchain_core.runnables import (
     RunnableParallel,
     RunnablePassthrough,)
 from langchain_community.vectorstores import Qdrant
-# from langchain_cohere import CohereEmbeddings
+from langchain_cohere import CohereEmbeddings
 
 import qdrant_client,os
 from langchain_qdrant import Qdrant
@@ -28,8 +28,8 @@ client = qdrant_client.QdrantClient(
     url,
     api_key=api_key,)
 
-# embeddings = CohereEmbeddings(model="embed-english-light-v3.0",cohere_api_key=os.getenv("cohere_api_key"))
-embeddings = HuggingFaceEmbeddings()
+embeddings = CohereEmbeddings(model="embed-english-light-v3.0",cohere_api_key=os.getenv("cohere_api_key"))
+# embeddings = HuggingFaceEmbeddings()
 
 vectorstore = Qdrant(
     client=client, collection_name="my_documents", 

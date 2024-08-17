@@ -1,8 +1,8 @@
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_community.document_loaders import TextLoader
 from langchain_community.vectorstores import Qdrant
-# from langchain_cohere import CohereEmbeddings
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_cohere import CohereEmbeddings
+# from langchain_huggingface import HuggingFaceEmbeddings
 import streamlit as st 
 import os,uuid
 # from dotenv import load_dotenv
@@ -63,8 +63,8 @@ with st.sidebar:
             try:
                 url = os.getenv("cluster_url")
                 api_key = os.getenv("gd_api_key")
-                embeddings = HuggingFaceEmbeddings()
-                # embeddings = CohereEmbeddings(model="embed-english-light-v3.0",cohere_api_key=os.getenv("cohere_api_key"))
+                # embeddings = HuggingFaceEmbeddings()
+                embeddings = CohereEmbeddings(model="embed-english-light-v3.0",cohere_api_key=os.getenv("cohere_api_key"))
                 qdrant = Qdrant.from_documents(
                     Documents,
                     embeddings,
