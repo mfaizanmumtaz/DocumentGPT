@@ -88,4 +88,4 @@ _inputs = RunnableParallel(
         "context": _search_query | retriever | _combine_documents,
     })
 
-chain = _inputs | ANSWER_PROMPT | ChatGoogleGenerativeAI(model="gemini-1.5-flash",google_api_key=os.getenv("dgoogle_api_key")).with_fallbacks([ChatGoogleGenerativeAI(model="gemini-1.5-flash",google_api_key=os.getenv("google_api_key"))]) | StrOutputParser()
+chain = _inputs | ANSWER_PROMPT | ChatGoogleGenerativeAI(model="gemini-1.5-pro",google_api_key=os.getenv("dgoogle_api_key")).with_fallbacks([ChatGoogleGenerativeAI(model="gemini-1.5-flash",google_api_key=os.getenv("google_api_key"))]) | StrOutputParser()
